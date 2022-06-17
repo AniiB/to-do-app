@@ -16,7 +16,7 @@ connectDB()
 
 
 //MiddleWares
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(express.json())
@@ -27,65 +27,95 @@ app.use(express.json())
 //===============================================
 
 // root request
-app.get('/', async (req,res) => {
-    let tasks = await db.collection(dbName).find().toArray()
-    res.render('index.ejs', {taskList: tasks})
+app.get('/', async (req, res) => {
+    try {
+        let tasks = await db.collection(dbName).find().toArray()
+        res.render('index.ejs', { taskList: tasks })
+    } catch (error) {
+        console.error(error)
+    }
+
 })
 
 //Create request to create a new task
 app.post('/addtask', async (req, res) => {
-    if(!req.body.task) return res.redirect('/')
+    if (!req.body.task) return res.redirect('/')
+    try {
+        let taskReq = req.body.task.trim()
+        let response = await db.collection(dbName).insertOne({
+            task: taskReq,
+            done: false
+        })
+        console.log(response)
+        res.redirect('/')
+    } catch (error) {
+        console.error(error)
+    }
 
-    let taskReq = req.body.task.trim()
-    let response = await db.collection(dbName).insertOne({
-        task: taskReq,
-        done: false
-    })
-    console.log(response)
-    res.redirect('/')
+
 })
 
 //Update request to mark task as complete
-app.put('/markdone', async (req,res) => {
-    let response = await db.collection(dbName).updateOne( {
-        task: req.body.task,
-    },{
-        $set : {
-            done : true
-        }
-    })
-    console.log(response)
-    res.json('Update Completed')
+app.put('/markdone', async (req, res) => {
+    try {
+        let response = await db.collection(dbName).updateOne({
+            task: req.body.task,
+        }, {
+            $set: {
+                done: true
+            }
+        })
+        console.log(response)
+        res.json('Update Completed')
+    } catch (error) {
+        console.error(error)
+    }
+
 })
 
 //Update request to mark task as incomplete
-app.put('/markundone', async (req,res) => {
-    let response = await db.collection(dbName).updateOne( {
-        task: req.body.task,
-    },{
-        $set : {
-            done : false
-        }
-    })
-    console.log(response)
-    res.json('Update Completed')
+app.put('/markundone', async (req, res) => {
+    try {
+        let response = await db.collection(dbName).updateOne({
+            task: req.body.task,
+        }, {
+            $set: {
+                done: false
+            }
+        })
+        console.log(response)
+        res.json('Update Completed')
+    } catch (error) {
+        console.error(error)
+    }
+
 })
 
 //Delete request to clear a single task
-app.delete('/deletetask', async (req,res) => {
-    console.log(req.body)
-    let response = await db.collection(dbName).deleteOne( {
-        task: req.body.task,
-    })
-    console.log(response)
-    res.json('Delete Successful')
+app.delete('/deletetask', async (req, res) => {
+    try {
+        let response = await db.collection(dbName).deleteOne({
+            task: req.body.task,
+        })
+        console.log(response)
+        res.json('Delete Successful')
+
+    } catch (error) {
+        console.error(error)
+    }
+
 })
 
 //DELETE request to clear all tasks
-app.delete('/deleteall', async (req,res) => {
-    let response = await db.collection(dbName).deleteMany({})
-    console.log(response)
-    res.json('Clear successful')
+app.delete('/deleteall', async (req, res) => {
+    try {
+        let response = await db.collection(dbName).deleteMany({})
+        console.log(response)
+        res.json('Clear successful')
+    } catch (error) {
+        console.error(error)
+    }
+
 })
 
 //Connect to MongoDB
