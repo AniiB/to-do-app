@@ -24,7 +24,7 @@
             <% for(let i=0; i < taskList.length; i++) {%>
 
                 <li class="taskItem">
-                    <% if(taskList[i].done===true) {%>
+                    <% if(taskList[i].done === true) {%>
                         <span>
                             <del>
                                 <%= taskList[i].task %>
@@ -37,6 +37,7 @@
                             <% } %>
                                 <span>
                                     <i class="fa-solid fa-check"></i>
+                                    <i class="fa-solid fa-rotate-left"></i>
                                     <i class="fa-solid fa-xmark"></i>
                                 </span>
                 </li>
