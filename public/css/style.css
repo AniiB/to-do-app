@@ -1,3 +1,19 @@
-body {
+.taskItem {
+    font-family: monospace;
+    max-width: 300px;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    padding:0.5rem;
+    /* border: 1px solid #0d1117; */
+    margin: 0.25rem;
+    box-shadow: 2px 0px 3px 0px black;
+    background: #183153;
+    color: white;
+}
+.fa-check {
+    color: green;
+}
+.fa-xmark{
     color: red;
 }

@@ -24,7 +24,7 @@ app.use(express.json())
 
 app.get('/', async (req,res) => {
     let tasks = await db.collection(dbName).find().toArray()
-    console.log(tasks)
+    // console.log(tasks)
     res.render('index.ejs', {taskList: tasks})
 })
 
@@ -39,7 +39,17 @@ app.post('/addtask', async (req, res) => {
     res.redirect('/')
 })
 
-
+app.put('/markdone', async (req,res) => {
+    let response = await db.collection(dbName).updateOne( {
+        task: req.body.task,
+    },{
+        $set : {
+            done : true
+        }
+    })
+    console.log(response)
+    res.json('Update Completed')
+})
 
 
 

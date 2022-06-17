@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="assets/fontawesome/css/all.css">
     <title>To Do App</title>
 </head>
 
@@ -21,15 +22,26 @@
     <section class="tasks">
         <ul>
             <% for(let i=0; i < taskList.length; i++) {%>
-                <span>
-                    <li class="taskItem">
-                        <%= taskList[i].task %>
-                    </li>
-                </span>
-                <span>
-                    <i></i>
-                    <i></i>
-                </span>
+
+                <li class="taskItem">
+                    <% if(taskList[i].done===true) {%>
+                        <span>
+                            <del>
+                                <%= taskList[i].task %>
+                            </del>
+                        </span>
+                        <%} else {%>
+                            <span>
+                                <%= taskList[i].task %>
+                            </span>
+                            <% } %>
+                                <span>
+                                    <i class="fa-solid fa-check"></i>
+                                    <i class="fa-solid fa-xmark"></i>
+                                </span>
+                </li>
+
+
                 <%}%>
         </ul>
 
