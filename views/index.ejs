@@ -5,48 +5,59 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="assets/fontawesome/css/all.css">
     <title>To Do App</title>
 </head>
 
 <body>
-    <h1>To Do List</h1>
-    <section>
-        <form action="/addtask" method="POST">
-            <textarea name="task" id="" cols="50" rows="2"></textarea>
-            <input type="submit" value="Add Task">
-        </form>
-    </section>
+    <div class="container">
+        <h1>To Do List</h1>
+        <section class="formContainer">
+            <form action="/addtask" method="POST">
+                <input type="text" name="task" class="taskBox"></input>
+                <section>
+                    <input class="btn" type="submit" value="Add Task">
+                </section>
+            </form>
+        </section>
 
-    <section class="tasks">
-        <ul>
-            <% for(let i=0; i < taskList.length; i++) {%>
+        <section class="tasks">
+            <ul>
+                <% for(let i=0; i < taskList.length; i++) {%>
 
-                <li class="taskItem">
-                    <% if(taskList[i].done === true) {%>
-                        <span>
-                            <del>
-                                <%= taskList[i].task %>
-                            </del>
-                        </span>
-                        <%} else {%>
+                    <li class="taskItem">
+                        <% if(taskList[i].done===true) {%>
                             <span>
-                                <%= taskList[i].task %>
+                                <del>
+                                    <%= taskList[i].task %>
+                                </del>
                             </span>
-                            <% } %>
+                            <%} else {%>
                                 <span>
-                                    <i class="fa-solid fa-check"></i>
-                                    <i class="fa-solid fa-rotate-left"></i>
-                                    <i class="fa-solid fa-xmark"></i>
+                                    <%= taskList[i].task %>
                                 </span>
-                </li>
+                                <% } %>
+                                    <span>
+                                        <i class="fa-solid fa-check" data-tooltip="mark done"></i>
+                                        <i class="fa-solid fa-rotate-left" data-tooltip="mark undone"></i>
+                                        <i class="fa-solid fa-xmark" data-tooltip="delete task"></i>
+                                    </span>
+                    </li>
 
 
-                <%}%>
-        </ul>
+                    <%}%>
+                        <button class ="btn reset">Clear All</button>
+            </ul>
 
-    </section>
+        </section>
+    </div>
+
+
+
     <script src="js/main.js"></script>
 </body>
 
